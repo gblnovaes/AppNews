@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.appnews">
+    package="br.com.gabrielnovaes.appnews">
 
     <application
         android:allowBackup="true"
