@@ -1,5 +1,4 @@
-package com.example.appnews
-
+import br.com.gabrielnovaes.appnews.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
