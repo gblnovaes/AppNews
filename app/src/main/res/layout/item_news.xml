@@ -20,14 +20,14 @@
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="0dp"
-        android:textAlignment="textEnd"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="8dp"
-        android:text="@string/title"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
 
-        app:layout_constraintRight_toLeftOf="parent"
+        android:text="@string/title"
+        android:textAlignment="viewStart"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ivArticleImage"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,10 +46,9 @@
         android:id="@+id/tvSource"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/source"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ivArticleImage"
         app:layout_constraintTop_toBottomOf="@+id/ivArticleImage" />
 
 
@@ -57,9 +56,8 @@
         android:id="@+id/tvPublishedAt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/publishedAt"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/ivArticleImage"
         app:layout_constraintTop_toBottomOf="@+id/tvSource" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
