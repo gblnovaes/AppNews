@@ -1,5 +1,6 @@
 package br.com.gabrielnovaes.appnews.ui
 
+import android.content.Intent
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -28,6 +29,7 @@ class SearchActivity : AbstractActivity(),ViewHome.View {
         presenter = SearchPresenter(this,dataSource)
         setLayout()
         search()
+        openArticle()
     }
 
    private fun setLayout(){
@@ -68,6 +70,14 @@ class SearchActivity : AbstractActivity(),ViewHome.View {
 
     override fun showArticles(article: List<Article>) {
        mainAdapter.differ.submitList(article.toList())
+    }
+
+    private fun openArticle() {
+        mainAdapter.setOnClickListener {
+            val intent = Intent(this, ArticleActivity::class.java)
+            intent.putExtra("article",it)
+            startActivity(intent)
+        }
     }
 
 }

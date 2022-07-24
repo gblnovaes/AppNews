@@ -44,7 +44,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
             tvPublishedAt.text = article.publishedAt
             tvSource.text = article.source?.name
 
-            setOnItemClickListener{
+            setOnClickListener{
                 onItemClickedListener?.let { click ->
                     click(article)
                 }
@@ -54,7 +54,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
 
 private var onItemClickedListener: ((Article) -> Unit)? = null
 
-private fun setOnItemClickListener(listener: (Article) -> Unit) {
+  fun setOnClickListener(listener: (Article) -> Unit) {
     onItemClickedListener = listener
 }
 

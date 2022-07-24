@@ -30,6 +30,15 @@ class MainActivity : AbstractActivity(), ViewHome.View {
         presenter = NewsPresenter(this, dataSource)
         presenter.requestAll()
         setLayout()
+        openArticle()
+    }
+
+    private fun openArticle() {
+        mainAdapter.setOnClickListener {
+            val intent = Intent(this, ArticleActivity::class.java)
+            intent.putExtra("article",it)
+            startActivity(intent)
+        }
     }
 
     private fun setLayout() {
@@ -43,14 +52,18 @@ class MainActivity : AbstractActivity(), ViewHome.View {
                 )
             )
         }
+
+
     }
+
+
 
     override fun showProgressBar() {
         rvProgressBar.visibility = View.VISIBLE
     }
 
     override fun showFailure(message: String) {
-       Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun hideProgressBar() {
@@ -59,27 +72,29 @@ class MainActivity : AbstractActivity(), ViewHome.View {
     }
 
     override fun showArticles(article: List<Article>) {
-       mainAdapter.differ.submitList(article.toList())
+        mainAdapter.differ.submitList(article.toList())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_item,menu)
+        menuInflater.inflate(R.menu.menu_item, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.search_menu -> {
-                Intent(this,SearchActivity::class.java).apply {
+                Intent(this, SearchActivity::class.java).apply {
                     startActivity(this)
                 }
             }
             R.id.favorite -> {
-                Intent(this,FavoriteActivity::class.java).apply {
+                Intent(this, FavoriteActivity::class.java).apply {
                     startActivity(this)
                 }
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 }
