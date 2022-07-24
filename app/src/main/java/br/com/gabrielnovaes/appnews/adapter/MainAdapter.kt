@@ -53,6 +53,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
 }
 
 private var onItemClickedListener: ((Article) -> Unit)? = null
+
 private fun setOnItemClickListener(listener: (Article) -> Unit) {
     onItemClickedListener = listener
 }
