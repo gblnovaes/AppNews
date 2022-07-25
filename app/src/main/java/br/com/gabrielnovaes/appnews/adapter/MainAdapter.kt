@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.com.gabrielnovaes.appnews.R
+import br.com.gabrielnovaes.appnews.databinding.ItemNewsBinding
 import br.com.gabrielnovaes.appnews.model.Article
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_news.view.*
 
 class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
 
-    inner class ArticleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class ArticleViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root)
 
     private val diffCallBack = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -29,7 +29,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder =
         ArticleViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
+            ItemNewsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         )
 
     override fun getItemCount(): Int = differ.currentList.size
@@ -37,8 +37,8 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
 
-        holder.itemView.apply {
-            Glide.with(this).load(article.urlToImage).into(ivArticleImage)
+        holder.binding.apply {
+            Glide.with(holder.itemView.context).load(article.urlToImage).into(ivArticleImage)
             tvTitle.text = article.title
             tvDescription.text = article.author ?: article.source?.name
             tvPublishedAt.text = article.publishedAt

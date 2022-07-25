@@ -1,39 +1,46 @@
 package br.com.gabrielnovaes.appnews.ui
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import br.com.gabrielnovaes.appnews.R
 import br.com.gabrielnovaes.appnews.adapter.MainAdapter
+import br.com.gabrielnovaes.appnews.databinding.ActivitySearchBinding
 import br.com.gabrielnovaes.appnews.model.Article
 import br.com.gabrielnovaes.appnews.model.data.NewsDataSource
 import br.com.gabrielnovaes.appnews.presenter.ViewHome
 import br.com.gabrielnovaes.appnews.presenter.search.SearchPresenter
 import br.com.gabrielnovaes.appnews.util.UtilQueryTextListener
-import kotlinx.android.synthetic.main.activity_search.*
 
-class SearchActivity : AbstractActivity(),ViewHome.View {
+class SearchActivity : AppCompatActivity(), ViewHome.View {
 
-    private val mainAdapter by lazy{
+
+    private val mainAdapter by lazy {
         MainAdapter()
     }
 
-    private lateinit var presenter:SearchPresenter
+    private lateinit var presenter: SearchPresenter
+    private lateinit var binding: ActivitySearchBinding
 
-    override fun getLayout() = R.layout.activity_search
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onInject() {
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         val dataSource = NewsDataSource(this)
-        presenter = SearchPresenter(this,dataSource)
+        presenter = SearchPresenter(this, dataSource)
         setLayout()
         search()
         openArticle()
     }
 
-   private fun setLayout(){
-        with(rvNewsSearch){
+    private fun setLayout() {
+        with(binding.rvNewsSearch) {
             adapter = mainAdapter
             layoutManager = LinearLayoutManager(this@SearchActivity)
             addItemDecoration(
@@ -45,37 +52,37 @@ class SearchActivity : AbstractActivity(),ViewHome.View {
         }
     }
 
-    private fun search(){
-        searchNews.setOnQueryTextListener(UtilQueryTextListener(this.lifecycle) { newText ->
+    private fun search() {
+        binding.searchNews.setOnQueryTextListener(UtilQueryTextListener(this.lifecycle) { newText ->
             newText?.let { query ->
                 if (query.isNotEmpty()) {
-                     presenter.search(query)
-                    rvProgressBarSearch.visibility = View.VISIBLE
+                    presenter.search(query)
+                    binding.rvProgressBarSearch.visibility = View.VISIBLE
                 }
             }
         })
     }
 
     override fun showProgressBar() {
-        rvProgressBarSearch.visibility = View.VISIBLE
+        binding.rvProgressBarSearch.visibility = View.VISIBLE
     }
 
     override fun showFailure(message: String) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
-     }
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
     override fun hideProgressBar() {
-        rvProgressBarSearch.visibility = View.INVISIBLE
+        binding.rvProgressBarSearch.visibility = View.INVISIBLE
     }
 
     override fun showArticles(article: List<Article>) {
-       mainAdapter.differ.submitList(article.toList())
+        mainAdapter.differ.submitList(article.toList())
     }
 
     private fun openArticle() {
         mainAdapter.setOnClickListener {
             val intent = Intent(this, ArticleActivity::class.java)
-            intent.putExtra("article",it)
+            intent.putExtra("article", it)
             startActivity(intent)
         }
     }

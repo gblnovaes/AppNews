@@ -1,22 +1,29 @@
 package br.com.gabrielnovaes.appnews.ui
 
+import android.os.Bundle
 import android.webkit.WebViewClient
-import br.com.gabrielnovaes.appnews.R
+import androidx.appcompat.app.AppCompatActivity
+import br.com.gabrielnovaes.appnews.databinding.ActivityArticleBinding
 import br.com.gabrielnovaes.appnews.model.Article
 import br.com.gabrielnovaes.appnews.model.data.NewsDataSource
 import br.com.gabrielnovaes.appnews.presenter.ViewHome
 import br.com.gabrielnovaes.appnews.presenter.favorite.FavoritePresenter
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_article.*
 
-class ArticleActivity : AbstractActivity(), ViewHome.Favorite {
+class ArticleActivity : AppCompatActivity(), ViewHome.Favorite {
 
     private lateinit var article: Article
     private lateinit var presenter: FavoritePresenter
+    private lateinit var binding: ActivityArticleBinding
 
-    override fun getLayout() = R.layout.activity_article
 
-    override fun onInject() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityArticleBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         val dataSource = NewsDataSource(this)
         presenter = FavoritePresenter(this, dataSource)
 
@@ -26,14 +33,14 @@ class ArticleActivity : AbstractActivity(), ViewHome.Favorite {
             }
         }
 
-        webView.apply {
+        binding.webView.apply {
             webViewClient = WebViewClient()
             article.url?.let { url ->
                 loadUrl(url)
             }
         }
 
-        fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             presenter.saveArticle(article)
             Snackbar.make(it, "Article saved success!! ", Snackbar.LENGTH_LONG).show()
         }
