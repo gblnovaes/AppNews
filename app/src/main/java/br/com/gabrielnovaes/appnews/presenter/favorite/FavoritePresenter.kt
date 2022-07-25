@@ -8,10 +8,17 @@ class FavoritePresenter(val view: ViewHome.Favorite,private val dataSource: News
 
     fun saveArticle(article: Article){
         dataSource.saveArticle(article)
-
     }
 
     override fun onSuccess(articles: List<Article>) {
         this.view.showArticles(articles)
-     }
+    }
+
+    fun getAll() {
+        dataSource.getAllArticles(this)
+    }
+
+    fun deleteArticle(article: Article?) {
+        dataSource.deleteArticle(article)
+    }
 }
