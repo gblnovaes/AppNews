@@ -4,6 +4,6 @@ import br.com.gabrielnovaes.appnews.model.Article
 
 interface FavoriteHome {
     interface Presenter {
-        fun showArticles(articles : List<Article>)
+        fun onSuccess(articles : List<Article>)
     }
 }

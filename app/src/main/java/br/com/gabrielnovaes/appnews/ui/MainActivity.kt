@@ -26,7 +26,7 @@ class MainActivity : AbstractActivity(), ViewHome.View {
     override fun getLayout() = R.layout.activity_main
 
     override fun onInject() {
-        val dataSource = NewsDataSource()
+        val dataSource = NewsDataSource(this)
         presenter = NewsPresenter(this, dataSource)
         presenter.requestAll()
         setLayout()
@@ -36,7 +36,7 @@ class MainActivity : AbstractActivity(), ViewHome.View {
     private fun openArticle() {
         mainAdapter.setOnClickListener {
             val intent = Intent(this, ArticleActivity::class.java)
-            intent.putExtra("article",it)
+            intent.putExtra("article", it)
             startActivity(intent)
         }
     }
@@ -52,11 +52,7 @@ class MainActivity : AbstractActivity(), ViewHome.View {
                 )
             )
         }
-
-
     }
-
-
 
     override fun showProgressBar() {
         rvProgressBar.visibility = View.VISIBLE
@@ -68,7 +64,6 @@ class MainActivity : AbstractActivity(), ViewHome.View {
 
     override fun hideProgressBar() {
         rvProgressBar.visibility = View.INVISIBLE
-
     }
 
     override fun showArticles(article: List<Article>) {
@@ -95,6 +90,4 @@ class MainActivity : AbstractActivity(), ViewHome.View {
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 }

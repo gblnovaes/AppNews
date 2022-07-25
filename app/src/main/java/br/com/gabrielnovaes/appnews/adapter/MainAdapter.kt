@@ -25,18 +25,18 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
         }
     }
 
-     val differ = AsyncListDiffer(this, diffCallBack)
+    val differ = AsyncListDiffer(this, diffCallBack)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder =
         ArticleViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
         )
 
-    override fun getItemCount(): Int =
-        differ.currentList.size
+    override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = differ.currentList[position]
+
         holder.itemView.apply {
             Glide.with(this).load(article.urlToImage).into(ivArticleImage)
             tvTitle.text = article.title
@@ -44,18 +44,17 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
             tvPublishedAt.text = article.publishedAt
             tvSource.text = article.source?.name
 
-            setOnClickListener{
+            setOnClickListener {
                 onItemClickedListener?.let { click ->
                     click(article)
                 }
             }
+        }
     }
-}
 
-private var onItemClickedListener: ((Article) -> Unit)? = null
+    private var onItemClickedListener: ((Article) -> Unit)? = null
 
-  fun setOnClickListener(listener: (Article) -> Unit) {
-    onItemClickedListener = listener
-}
-
+    fun setOnClickListener(listener: (Article) -> Unit) {
+        onItemClickedListener = listener
+    }
 }

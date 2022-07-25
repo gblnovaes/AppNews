@@ -15,20 +15,18 @@ internal class UtilQueryTextListener(
 ) : SearchView.OnQueryTextListener, LifecycleObserver {
 
     private val coroutineScope = lifecycle.coroutineScope
-    private var searchJob: Job? =  null
+    private var searchJob: Job? = null
 
     override fun onQueryTextSubmit(query: String?): Boolean = false
 
     override fun onQueryTextChange(newText: String?): Boolean {
-       searchJob?.cancel()
+        searchJob?.cancel()
         searchJob = coroutineScope.launch {
-            newText?.let{
+            newText?.let {
                 delay(SEARCH_NEWS_DELAY)
                 utilQueryTextListener(newText)
             }
         }
         return false
     }
-
-
 }
