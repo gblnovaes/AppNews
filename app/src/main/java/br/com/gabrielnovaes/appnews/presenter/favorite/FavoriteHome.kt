@@ -1,6 +1,6 @@
 package br.com.gabrielnovaes.appnews.presenter.favorite
 
-import br.com.gabrielnovaes.appnews.model.Article
+import br.com.gabrielnovaes.appnews.data.local.model.Article
 
 interface FavoriteHome {
     interface Presenter {

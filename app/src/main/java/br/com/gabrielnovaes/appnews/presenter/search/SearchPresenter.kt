@@ -1,7 +1,7 @@
 package br.com.gabrielnovaes.appnews.presenter.search
 
-import br.com.gabrielnovaes.appnews.model.NewsResponse
-import br.com.gabrielnovaes.appnews.model.data.NewsDataSource
+import br.com.gabrielnovaes.appnews.data.local.model.NewsResponse
+import br.com.gabrielnovaes.appnews.repository.NewsDataSource
 import br.com.gabrielnovaes.appnews.presenter.ViewHome
 
 class SearchPresenter(val view: ViewHome.View,private val dataSource: NewsDataSource) : SearchHome.Presenter {

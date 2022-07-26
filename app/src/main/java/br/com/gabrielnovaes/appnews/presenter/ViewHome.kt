@@ -1,6 +1,6 @@
 package br.com.gabrielnovaes.appnews.presenter
 
-import br.com.gabrielnovaes.appnews.model.Article
+import br.com.gabrielnovaes.appnews.data.local.model.Article
 
 interface ViewHome {
     interface View {

@@ -1,7 +1,7 @@
 package br.com.gabrielnovaes.appnews.presenter.news
 
-import br.com.gabrielnovaes.appnews.model.NewsResponse
-import br.com.gabrielnovaes.appnews.model.data.NewsDataSource
+import br.com.gabrielnovaes.appnews.data.local.model.NewsResponse
+import br.com.gabrielnovaes.appnews.repository.NewsDataSource
 import br.com.gabrielnovaes.appnews.presenter.ViewHome
 
 class NewsPresenter(private val news: ViewHome.View, private val dataSource: NewsDataSource) :
