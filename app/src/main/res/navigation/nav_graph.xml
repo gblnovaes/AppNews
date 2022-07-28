@@ -10,6 +10,9 @@
         <action
             android:id="@+id/action_homeFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
+        <argument
+            android:name="article"
+            app:argType="br.com.gabrielnovaes.appnews.data.local.model.Article" />
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
@@ -18,6 +21,9 @@
         <action
             android:id="@+id/action_favoriteFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
+        <argument
+            android:name="article"
+            app:argType="br.com.gabrielnovaes.appnews.data.local.model.Article" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -26,6 +32,9 @@
         <action
             android:id="@+id/action_searchFragment_to_webViewFragment"
             app:destination="@id/webViewFragment" />
+        <argument
+            android:name="article"
+            app:argType="br.com.gabrielnovaes.appnews.data.local.model.Article" />
     </fragment>
     <fragment
         android:id="@+id/webViewFragment"

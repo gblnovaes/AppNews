@@ -10,15 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppNews">
         <activity
-            android:name=".ui.activities.SearchActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.FavoriteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.ArticleActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
