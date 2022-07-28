@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import br.com.gabrielnovaes.appnews.repository.NewsRepository
 
-abstract class BaseFragment<viewModel : ViewModel, binding : ViewBinding> : Fragment() {
+abstract class BaseFragment<viewModel : ViewModel, viewBinding : ViewBinding> : Fragment() {
 
-    protected lateinit var binding: binding
+    protected lateinit var binding: viewBinding
     protected lateinit var viewModel: viewModel
 
     override fun onCreateView(
@@ -23,7 +23,7 @@ abstract class BaseFragment<viewModel : ViewModel, binding : ViewBinding> : Frag
         binding = getFragmentBinding(inflater, container)
 
         val factory = ViewModelFactory(getFragmentRepository())
-        viewModel = ViewModelProvider(viewModelStore, factory).get(getViewModel())
+        viewModel = ViewModelProvider(viewModelStore, factory)[getViewModel()]
         return binding.root
     }
 
@@ -31,6 +31,6 @@ abstract class BaseFragment<viewModel : ViewModel, binding : ViewBinding> : Frag
 
     abstract fun getFragmentRepository(): NewsRepository
 
-    abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): binding
+    abstract fun getFragmentBinding(inflater: LayoutInflater, container: ViewGroup?): viewBinding
 
 }
