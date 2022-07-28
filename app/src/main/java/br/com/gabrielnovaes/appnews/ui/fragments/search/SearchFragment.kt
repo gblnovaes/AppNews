@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,8 @@ import br.com.gabrielnovaes.appnews.databinding.FragmentSearchBinding
 import br.com.gabrielnovaes.appnews.repository.NewsRepository
 import br.com.gabrielnovaes.appnews.ui.adapter.MainAdapter
 import br.com.gabrielnovaes.appnews.ui.fragments.base.BaseFragment
+import br.com.gabrielnovaes.appnews.util.UtilQueryTextListener
+import br.com.gabrielnovaes.appnews.util.state.StateResource
 
 class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
 
@@ -21,7 +24,21 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        search()
+        observerResults()
     }
+
+    private fun search(){
+        binding.searchNews.setOnQueryTextListener(UtilQueryTextListener(this.lifecycle) { newText ->
+            newText?.let { query ->
+                if (query.isNotEmpty()) {
+                    viewModel.fetchSearch(query)
+                    binding.rvProgressBarSearch.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
+
 
     private fun setupRecyclerView() = with(binding) {
         rvNewsSearch.apply {
@@ -36,6 +53,29 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
             findNavController().navigate(action)
         }
     }
+
+    private fun observerResults(){
+        viewModel.search.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is StateResource.Success -> {
+                    binding.rvProgressBarSearch.visibility = View.INVISIBLE
+                    response.data?.let { data->
+                        mainAdapter.differ.submitList(data.articles.toList())
+                    }
+                }
+                is StateResource.Loading -> {
+                    binding.rvProgressBarSearch.visibility = View.VISIBLE
+                }
+                is StateResource.Error -> {
+                    binding.rvProgressBarSearch.visibility = View.INVISIBLE
+                    Toast.makeText(requireContext(),"Ocorreu um erro",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+
+
 
     override fun getViewModel(): Class<SearchViewModel> = SearchViewModel::class.java
 

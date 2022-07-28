@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.FavoriteActivity">
+  >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFavorite"
@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/item_news"
         tools:itemCount="5"
+        android:visibility="visible"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
@@ -28,4 +29,17 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/tvListEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Lista Vazia"
+        android:textSize="32sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
