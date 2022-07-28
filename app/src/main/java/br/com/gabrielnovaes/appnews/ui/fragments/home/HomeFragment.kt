@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.gabrielnovaes.appnews.data.local.db.ArticleDatabase
@@ -12,6 +14,7 @@ import br.com.gabrielnovaes.appnews.databinding.FragmentHomeBinding
 import br.com.gabrielnovaes.appnews.repository.NewsRepository
 import br.com.gabrielnovaes.appnews.ui.adapter.MainAdapter
 import br.com.gabrielnovaes.appnews.ui.fragments.base.BaseFragment
+import br.com.gabrielnovaes.appnews.util.state.StateResource
 
 class HomeFragment : BaseFragment<HomeViewModel,FragmentHomeBinding>() {
 
@@ -20,6 +23,27 @@ class HomeFragment : BaseFragment<HomeViewModel,FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        observerResults()
+    }
+
+    private fun observerResults(){
+        viewModel.getAll.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is StateResource.Success -> {
+                    binding.rvProgressBar.visibility = View.INVISIBLE
+                    response.data?.let { data->
+                        mainAdapter.differ.submitList(data.articles.toList())
+                    }
+                }
+                is StateResource.Loading -> {
+                    binding.rvProgressBar.visibility = View.VISIBLE
+                }
+                is StateResource.Error -> {
+                    binding.rvProgressBar.visibility = View.INVISIBLE
+                    Toast.makeText(requireContext(),"Ocorreu um erro",Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun setupRecyclerView()  = with(binding){
@@ -31,7 +55,8 @@ class HomeFragment : BaseFragment<HomeViewModel,FragmentHomeBinding>() {
             )
         }
         mainAdapter.setOnClickListener {
-            HomeFragmentDirections.actionHomeFragmentToWebViewFragment(it)
+          val action =   HomeFragmentDirections.actionHomeFragmentToWebViewFragment(it)
+            findNavController().navigate(action)
         }
     }
 

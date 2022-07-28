@@ -11,7 +11,8 @@ import com.bumptech.glide.Glide
 
 class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
 
-    inner class ArticleViewHolder(val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ArticleViewHolder(val binding: ItemNewsBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     private val diffCallBack = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -27,24 +28,25 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.ArticleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder =
         ArticleViewHolder(
-            ItemNewsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+            ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
     override fun getItemCount(): Int = differ.currentList.size
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        val article = differ.currentList[position]
+        with(holder) {
+            with(differ.currentList[position]) {
+                Glide.with(holder.itemView.context).load(this.urlToImage)
+                    .into(binding.ivArticleImage)
+                binding.tvTitle.text = this.title
+                binding.tvDescription.text = this.author ?: this.source?.name
+                binding.tvPublishedAt.text = this.publishedAt
+                binding.tvSource.text = this.source?.name
 
-        holder.binding.apply {
-            Glide.with(holder.itemView.context).load(article.urlToImage).into(ivArticleImage)
-            tvTitle.text = article.title
-            tvDescription.text = article.author ?: article.source?.name
-            tvPublishedAt.text = article.publishedAt
-            tvSource.text = article.source?.name
-
-            setOnClickListener {
-                onItemClickedListener?.let { click ->
-                    click(article)
+                binding.containerItem.setOnClickListener {
+                    onItemClickedListener?.let { article ->
+                        article(this)
+                    }
                 }
             }
         }

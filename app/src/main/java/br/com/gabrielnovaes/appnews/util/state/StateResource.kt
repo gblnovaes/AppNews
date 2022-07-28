@@ -1,4 +1,4 @@
-package br.com.gabrielnovaes.appnews.util
+package br.com.gabrielnovaes.appnews.util.state
 
 sealed class StateResource<out T>(
     val data: T? = null,
