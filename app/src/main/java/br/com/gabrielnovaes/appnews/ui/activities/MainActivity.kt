@@ -31,6 +31,9 @@ class MainActivity :AppCompatActivity(){
 
         binding.bottomNavigation.apply {
             setupWithNavController(navController)
+            setOnItemReselectedListener {  }
         }
+
+
     }
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +38,7 @@ class FavoriteFragment:
             when (response) {
                 is ArticleListState.Success -> {
                     binding.rvProgressBarFavorite.visibility = View.INVISIBLE
-                    response.list?.let { data->
+                    response.list?.let { _->
                         mainAdapter.differ.submitList(response.list)
                     }
                 }
@@ -52,7 +53,7 @@ class FavoriteFragment:
                 is ArticleListState.Empty -> {
                     mainAdapter.differ.submitList(emptyList())
                     binding.tvListEmpty.visibility = View.VISIBLE
-
+                    binding.rvProgressBarFavorite.visibility = View.INVISIBLE
                 }
             }
         }
@@ -98,6 +99,12 @@ class FavoriteFragment:
         ItemTouchHelper(itemTouchPerCallback).apply {
             attachToRecyclerView(binding.rvFavorite)
         }
+
+        mainAdapter.setOnClickListener {
+            val action = FavoriteFragmentDirections.actionFavoriteFragmentToWebViewFragment(it)
+            findNavController().navigate(action)
+        }
+
     }
 
     override fun getViewModel(): Class<FavoriteViewModel> = FavoriteViewModel::class.java

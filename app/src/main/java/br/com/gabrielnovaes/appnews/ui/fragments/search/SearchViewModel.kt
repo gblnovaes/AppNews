@@ -14,9 +14,6 @@ class SearchViewModel constructor(val repository: NewsRepository) : ViewModel() 
     private val _search = MutableLiveData<StateResource<NewsResponse>>()
     val search: LiveData<StateResource<NewsResponse>> get() = _search
 
-
-
-
     fun fetchSearch(query:String) = viewModelScope.launch {
         safeFetchSearch(query)
     }

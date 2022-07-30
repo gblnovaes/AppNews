@@ -49,7 +49,4 @@ class FavoriteViewModel(private val repository: NewsRepository) : ViewModel() {
     fun deleteArticle(article: Article) = viewModelScope.launch {
         repository.delete(article)
     }
-
-
-
 }

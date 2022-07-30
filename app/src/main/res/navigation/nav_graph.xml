@@ -44,7 +44,7 @@
         tools:layout="@layout/fragment_article"
         android:id="@+id/webViewFragment"
         android:name="br.com.gabrielnovaes.appnews.ui.fragments.webview.WebViewFragment"
-        android:label="WebViewFragment" >
+        android:label="Article" >
         <argument
             android:name="article"
             app:argType="br.com.gabrielnovaes.appnews.data.local.model.Article" />

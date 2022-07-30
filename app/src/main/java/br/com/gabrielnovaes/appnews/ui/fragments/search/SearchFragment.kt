@@ -39,7 +39,6 @@ class SearchFragment : BaseFragment<SearchViewModel, FragmentSearchBinding>() {
         })
     }
 
-
     private fun setupRecyclerView() = with(binding) {
         rvNewsSearch.apply {
             adapter = mainAdapter
